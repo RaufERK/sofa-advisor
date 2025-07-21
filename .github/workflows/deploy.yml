@@ -1,4 +1,4 @@
-name: 🚀 Deploy SofaBot to VPS
+name: 🚀 Deploy SofaAdvisor to VPS
 
 on:
   push:
@@ -18,16 +18,16 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
             export PATH=$HOME/.nvm/versions/node/v22.15.1/bin:$PATH
-            cd /var/www/sofa-bot
+            cd /var/www/sofa-advisor
 
             echo "📥 Pull latest changes..."
             git pull origin main
 
             echo "📦 Install dependencies..."
-            pnpm install --frozen-lockfile
+            npm install
 
             echo "🏗 Build project..."
-            pnpm build
+            npm run build
 
             echo "🔁 Reload PM2 process..."
-            pm2 reload ecosystem.config.js --only sofa-bot || pm2 start ecosystem.config.js --only sofa-bot
+            pm2 reload ecosystem.config.js --only sofa-advisor || pm2 start ecosystem.config.js --only sofa-advisor
