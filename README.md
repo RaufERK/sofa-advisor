@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sofa Advisor - Чат-бот службы поддержки
 
-## Getting Started
+Учебный проект чат-бота для мебельной компании "Диванчик" на Next.js + TypeScript + Tailwind CSS.
 
-First, run the development server:
+## 🚀 Быстрый старт
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. **Установка зависимостей:**
+   ```bash
+   npm install
+   ```
+
+2. **Настройка переменных окружения:**
+   Создайте файл `.env.local` в корне проекта:
+   ```env
+   OPENROUTER_API_KEY=your_openrouter_api_key_here
+   NEXT_PUBLIC_SITE_URL=http://localhost:3000
+   ```
+
+3. **Получение API ключа:**
+   - Зарегистрируйтесь на [OpenRouter](https://openrouter.ai/)
+   - Получите API ключ в личном кабинете
+   - Вставьте ключ в переменную `OPENROUTER_API_KEY`
+
+4. **Запуск проекта:**
+   ```bash
+   npm run dev
+   ```
+
+5. **Откройте браузер:**
+   Перейдите по адресу [http://localhost:3000](http://localhost:3000)
+
+## 🛠 Технологии
+
+- **Frontend:** Next.js 15, React 19, TypeScript
+- **Styling:** Tailwind CSS
+- **API:** OpenRouter (Claude 3 Haiku)
+- **Architecture:** App Router, Server Actions
+
+## 📁 Структура проекта
+
+```
+src/
+├── app/
+│   ├── api/
+│   │   └── ask/
+│   │       └── route.ts          # API роут для обработки запросов
+│   ├── page.tsx                  # Главная страница с интерфейсом
+│   ├── layout.tsx                # Корневой layout
+│   └── globals.css               # Глобальные стили
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 Функциональность
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Интерфейс:** Минималистичный дизайн с формой ввода вопроса
+- **API интеграция:** Запросы к OpenRouter API через серверный роут
+- **Системный промпт:** Специализация на вопросах о диванах
+- **Обработка ошибок:** Валидация и обработка ошибок API
+- **Состояние загрузки:** Индикатор "Пишет ответ..." во время ожидания
+- **Адаптивный дизайн:** Оптимизация для мобильных устройств
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔧 Настройка
 
-## Learn More
+### Альтернативные API
 
-To learn more about Next.js, take a look at the following resources:
+Для использования GigaChat вместо OpenRouter измените в `src/app/api/ask/route.ts`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```typescript
+// Замените URL и заголовки на GigaChat API
+const response = await fetch('https://gigachat.devices.sberbank.ru/api/v1/chat/completions', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${process.env.GIGACHAT_API_KEY}`,
+  },
+  // ... остальные параметры
+});
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Кастомизация промпта
 
-## Deploy on Vercel
+Измените `SYSTEM_PROMPT` в `src/app/api/ask/route.ts` для настройки поведения бота.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 Примеры вопросов
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Как выбрать подходящий размер дивана?
+- Какие ткани лучше всего подходят для детей?
+- Как ухаживать за кожаным диваном?
+- Сколько стоит доставка дивана?
+- Есть ли гарантия на диваны?
+
+## 🚀 Деплой
+
+Проект готов к деплою на Vercel:
+
+1. Подключите репозиторий к Vercel
+2. Добавьте переменные окружения в настройках проекта
+3. Деплой произойдет автоматически
+
+## 📄 Лицензия
+
+Учебный проект для изучения Next.js и интеграции с AI API.
